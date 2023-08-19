@@ -37,14 +37,15 @@ def start_new_instance(start_loc: str) -> int:
 def kill_bluestacks_x() -> None:
     """
     Summary
-        Finds the other instance of BlueStacks and ends the process
-        TODO: does not work on first execution. Click to activate BlueStacks X instance before delete
+        Finds the other instances of BlueStacks and ends the process
     :return:
     """
-    if wgui.FindWindow(None, "BlueStacks X"):
+    while wgui.FindWindow(None, "BlueStacks X"):
         kill_window = wgui.FindWindow(None, "BlueStacks X")
         print(f"Killing BlueStacks X with id {kill_window}")
+        wgui.SendMessage(kill_window, win32con.WM_ACTIVATE, win32con.WA_ACTIVE, 0)
         wgui.PostMessage(kill_window, win32con.WM_CLOSE, 0, 0)
+        time.sleep(0.5)
 
 
 def move_instance(window_id_in: int) -> None:
